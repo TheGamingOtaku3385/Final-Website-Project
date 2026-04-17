@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bionicle Vault | Matoran Villagers</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+    <style>
+        body {
+            background: url('images/backgrounds/homesplash.png') no-repeat center center fixed;
+            background-size: cover;
+            color: #eee;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            position: relative;
+        }
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.65);
+            z-index: -1;
+        }
+        header h1 {
+            color: #e94560;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            margin: 20px 0;
+        }
+        .navbar {
+            border-radius: 8px;
+            margin-bottom: 30px;
+            background-color: rgba(15, 15, 26, 0.9) !important;
+            backdrop-filter: blur(5px);
+        }
+        .navbar-brand, .nav-link {
+            color: #eee !important;
+        }
+        .nav-link:hover {
+            color: #e94560 !important;
+        }
+        .page-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        .page-header h2 {
+            color: #e94560;
+            font-size: 2.2rem;
+        }
+        .page-header p {
+            color: #ccc;
+            max-width: 900px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+        .section-title {
+            color: #e94560;
+            border-left: 4px solid #e94560;
+            padding-left: 1rem;
+            margin: 2rem 0 1rem 0;
+        }
+        .section-subtitle {
+            color: #ccc;
+            margin-bottom: 1.5rem;
+            font-style: italic;
+        }
+        /* Village Grid */
+        .village-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        .village-card {
+            background: rgba(22, 33, 62, 0.85);
+            backdrop-filter: blur(4px);
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: transform 0.3s;
+            cursor: pointer;
+        }
+        .village-card:hover {
+            transform: translateY(-3px);
+            background: rgba(22, 33, 62, 0.95);
+        }
+        .village-image-container {
+            margin-bottom: 1rem;
+        }
+        .village-image-container img {
+            width: 100%;
+            max-width: 200px;
+            height: auto;
+            aspect-ratio: 200 / 200;
+            object-fit: cover;
+            border-radius: 12px;
+            background: rgba(0,0,0,0.3);
+            padding: 5px;
+        }
+        .village-name {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #e94560;
+        }
+        .village-element {
+            display: inline-block;
+            padding: 0.2rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            margin: 0.5rem 0;
+        }
+        /* Matoran & Turaga Cards */
+        .villager-card {
+            background: rgba(22, 33, 62, 0.9);
+            backdrop-filter: blur(4px);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            transition: transform 0.3s, box-shadow 0.3s;
+            height: 100%;
+            text-align: center;
+        }
+        .villager-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(233,69,96,0.3);
+            background: rgba(22, 33, 62, 0.95);
+        }
+        .image-container {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        .villager-type-badge {
+            display: inline-block;
+            margin-bottom: 0.5rem;
+            padding: 0.2rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: bold;
+        }
+        .badge-matoran { background: #5bc0de; color: #0f0f1a; }
+        .badge-turaga { background: #e94560; color: white; }
+        .villager-card img {
+            width: 100%;
+            max-width: 300px;
+            height: auto;
+            aspect-ratio: 300 / 300;
+            object-fit: cover;
+            background: rgba(0,0,0,0.3);
+            border-radius: 12px;
+            display: block;
+            margin: 0 auto;
+        }
+        .villager-card h3 {
+            color: #e94560;
+            margin-top: 0.75rem;
+            margin-bottom: 0.5rem;
+            font-size: 1.3rem;
+        }
+        .villager-village {
+            display: inline-block;
+            padding: 0.2rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            margin: 0.5rem 0;
+            font-weight: bold;
+        }
+        .ta-koro { background: #e94560; color: white; }
+        .ga-koro { background: #5bc0de; color: #0f0f1a; }
+        .ko-koro { background: #5bc0de; color: #0f0f1a; }
+        .onu-koro { background: #5cb85c; color: white; }
+        .po-koro { background: #f0ad4e; color: #0f0f1a; }
+        .le-koro { background: #5bc0de; color: #0f0f1a; }
+        .villager-desc {
+            font-size: 0.85rem;
+            color: #ddd;
+            margin: 0.5rem 0;
+            line-height: 1.4;
+        }
+        .search-box {
+            background: rgba(22, 33, 62, 0.9);
+            border-radius: 50px;
+            padding: 1rem;
+            margin-bottom: 2rem;
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .search-input {
+            background: rgba(15, 15, 26, 0.8);
+            border: 1px solid #e94560;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            width: 250px;
+        }
+        .search-input::placeholder {
+            color: #aaa;
+        }
+        .search-input:focus {
+            outline: none;
+            border-color: #ff6b6b;
+        }
+        .filter-btn {
+            background: #e94560;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            cursor: pointer;
+        }
+        .filter-btn:hover {
+            background: #ff6b6b;
+        }
+        .reset-btn {
+            background: #5bc0de;
+            color: #0f0f1a;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            cursor: pointer;
+        }
+        .reset-btn:hover {
+            background: #7ec8e0;
+        }
+        .result-count {
+            color: #e94560;
+            font-size: 0.9rem;
+            padding: 0.5rem;
+        }
+        footer {
+            margin-top: 3rem;
+            padding: 1rem 0;
+            text-align: center;
+            border-top: 1px solid #16213e;
+            color: #888;
+            background: rgba(15, 15, 26, 0.7);
+            border-radius: 8px;
+        }
+        .container {
+            position: relative;
+            z-index: 1;
+        }
+        .element-fire, .fire { background: #e94560; color: white; }
+        .element-water, .water { background: #5bc0de; color: #0f0f1a; }
+        .element-ice, .ice { background: #5bc0de; color: #0f0f1a; }
+        .element-earth, .earth { background: #5cb85c; color: white; }
+        .element-stone, .stone { background: #f0ad4e; color: #0f0f1a; }
+        .element-air, .air { background: #5bc0de; color: #0f0f1a; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🪨 Bionicle Vault 🧊</h1>
+        </header>
+        <main>
+            <!-- Navigation Bar -->
+            <nav class="navbar navbar-expand-lg bg-body-tertiary">
+                <div class="container-fluid">
+                    <a class="navbar-brand" href="index.html">Bionicle Vault</a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                        <ul class="navbar-nav">
+                            <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                            <li class="nav-item"><a class="nav-link" href="backstory.html">Origins</a></li>
+                            <li class="nav-item"><a class="nav-link" href="story.html">Actual Bionicle Lore</a></li>
+                            <li class="nav-item"><a class="nav-link active" href="villagers.html">Matoran</a></li>
+                            <li class="nav-item"><a class="nav-link" href="heroes.html">Toa</a></li>
+                            <li class="nav-item"><a class="nav-link" href="villains.html">Makuta</a></li>
+                            <li class="nav-item"><a class="nav-link" href="masks.html">Kanohi</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+
+            <!-- Page Header -->
+            <div class="page-header">
+                <h2>🏘️ Matoran — The Villagers of Mata Nui 🏘️</h2>
+                <p>The Matoran are the villagers and workers of Mata Nui, the backbone of society. They lack elemental powers but possess incredible skills in crafting, building, and farming. Each Matoran is connected to one of the six elements and lives in a village led by a Turaga elder. Without masks, Matoran cannot function properly — dizziness, weakness, and eventually a coma-like state will occur. The most famous Matoran, Takua, would later become the Toa of Light, Takanuva.</p>
+            </div>
+
+            <!-- Section 1: The Six Villages of Mata Nui -->
+            <h3 class="section-title">🏔️ The Six Villages of Mata Nui</h3>
+            <div class="section-subtitle">
+                <p>Each of the six elements has a corresponding village on the island of Mata Nui, led by a Turaga elder. The villages are spread across diverse landscapes, from volcanic craters to frozen peaks. Click any village to filter characters from that village!</p>
+            </div>
+            <div class="village-grid">
+                <div class="village-card" data-village="ta-koro">
+                    <div class="village-image-container">
+                        <img src="images/villages/ta-koro.png" alt="Ta-Koro">
+                    </div>
+                    <div class="village-name">Ta-Koro</div>
+                    <span class="village-element fire">🔥 Fire 🔥</span>
+                    <div class="villager-desc">Village of Fire, located in the volcanic region. Home to the Ta-Matoran, known for their bravery and skill as guards. Led by Turaga Vakama.</div>
+                </div>
+                <div class="village-card" data-village="ga-koro">
+                    <div class="village-image-container">
+                        <img src="images/villages/ga-koro.png" alt="Ga-Koro">
+                    </div>
+                    <div class="village-name">Ga-Koro</div>
+                    <span class="village-element water">💧 Water 💧</span>
+                    <div class="villager-desc">Village of Water, built on floating lily pads in Naho Bay. Home to the Ga-Matoran, skilled sailors and fishers. Led by Turaga Nokama.</div>
+                </div>
+                <div class="village-card" data-village="ko-koro">
+                    <div class="village-image-container">
+                        <img src="images/villages/ko-koro.png" alt="Ko-Koro">
+                    </div>
+                    <div class="village-name">Ko-Koro</div>
+                    <span class="village-element ice">❄️ Ice ❄️</span>
+                    <div class="villager-desc">Village of Ice, perched on the frozen peaks of Mount Ihu. Home to the Ko-Matoran, known for their wisdom and meditation. Led by Turaga Nuju.</div>
+                </div>
+                <div class="village-card" data-village="onu-koro">
+                    <div class="village-image-container">
+                        <img src="images/villages/onu-koro.png" alt="Onu-Koro">
+                    </div>
+                    <div class="village-name">Onu-Koro</div>
+                    <span class="village-element earth">⛰️ Earth ⛰️</span>
+                    <div class="villager-desc">Village of Earth, hidden in vast underground caverns. Home to the Onu-Matoran, master miners and inventors. Led by Turaga Whenua.</div>
+                </div>
+                <div class="village-card" data-village="po-koro">
+                    <div class="village-image-container">
+                        <img src="images/villages/po-koro.png" alt="Po-Koro">
+                    </div>
+                    <div class="village-name">Po-Koro</div>
+                    <span class="village-element stone">🪨 Stone 🪨</span>
+                    <div class="villager-desc">Village of Stone, carved into desert canyons. Home to the Po-Matoran, expert sculptors and builders. Led by Turaga Onewa.</div>
+                </div>
+                <div class="village-card" data-village="le-koro">
+                    <div class="village-image-container">
+                        <img src="images/villages/le-koro.png" alt="Le-Koro">
+                    </div>
+                    <div class="village-name">Le-Koro</div>
+                    <span class="village-element air">🌪️ Air 🌪️</span>
+                    <div class="villager-desc">Village of Air, built high in the jungle treetops. Home to the Le-Matoran, musicians and riders of Gukko birds. Led by Turaga Matau.</div>
+                </div>
+            </div>
+
+            <!-- Search/Filter Section -->
+            <div class="search-box">
+                <input type="text" id="searchInput" class="search-input" placeholder="🔍 Search by name...">
+                <select id="villageSelect" class="search-input">
+                    <option value="all">All Villages</option>
+                    <option value="ta-koro">🔥 Ta-Koro (Fire)</option>
+                    <option value="ga-koro">💧 Ga-Koro (Water)</option>
+                    <option value="ko-koro">❄️ Ko-Koro (Ice)</option>
+                    <option value="onu-koro">⛰️ Onu-Koro (Earth)</option>
+                    <option value="po-koro">🪨 Po-Koro (Stone)</option>
+                    <option value="le-koro">🌪️ Le-Koro (Air)</option>
+                </select>
+                <button id="resetBtn" class="reset-btn">Reset Filters</button>
+                <span id="resultDisplay" class="result-count"></span>
+            </div>
+
+            <!-- Section 2: Notable Matoran -->
+            <h3 class="section-title">🌟 Notable Matoran</h3>
+            <div class="section-subtitle">
+                <p>While most Matoran live quiet lives as workers and craftsmen, some have risen to fame through their deeds, inventions, or destiny. These are the most notable Matoran of Mata Nui.</p>
+            </div>
+            <div class="row" id="matoranContainer">
+                <div class="col-md-6 col-lg-4 character-card" data-name="takua" data-village="ta-koro">
+                    <div class="villager-card">
+                        <div class="image-container">
+                            <span class="villager-type-badge badge-matoran">Matoran</span>
+                            <img src="images/villagers/takua.png" alt="Takua">
+                        </div>
+                        <h3>Takua</h3>
+                        <span class="villager-village ta-koro">🔥 Ta-Koro (Wandering)</span>
+                        <div class="villager-desc">
+                            <strong>Role:</strong> Chronicler<br>
+                            <strong>Personality:</strong> Adventurous, curious, and restless. Takua never fit in with any single village, preferring to wander Mata Nui recording its history. His destiny was far greater than he knew — he would become Takanuva, the Toa of Light.
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4 character-card" data-name="jaller" data-village="ta-koro">
+                    <div class="villager-card">
+                        <div class="image-container">
+                            <span class="villager-type-badge badge-matoran">Matoran</span>
+                            <img src="images/villagers/jaller.png" alt="Jaller">
+                        </div>
+                        <h3>Jaller</h3>
+                        <span class="villager-village ta-koro">🔥 Ta-Koro</span>
+                        <div class="villager-desc">
+                            <strong>Role:</strong> Captain of the Guard<br>
+                            <strong>Personality:</strong> Brave, loyal, and duty-bound. Jaller leads the Ta-Koro Guard with honor. He is Takua's closest friend and would follow him anywhere — even into the lair of Makuta.
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4 character-card" data-name="nuparu" data-village="onu-koro">
+                    <div class="villager-card">
+                        <div class="image-container">
+                            <span class="villager-type-badge badge-matoran">Matoran</span>
+                            <img src="images/villagers/nuparu.png" alt="Nuparu">
+                        </div>
+                        <h3>Nuparu</h3>
+                        <span class="villager-village onu-koro">⛰️ Onu-Koro</span>
+                        <div class="villager-desc">
+                            <strong>Role:</strong> Inventor<br>
+                            <strong>Personality:</strong> Brilliant, inventive, and resourceful. Nuparu created the Boxor to fight the Bohrok and later designed the Vahki. His mind works faster than any other Matoran's hands.
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4 character-card" data-name="kapura" data-village="ta-koro">
+                    <div class="villager-card">
+                        <div class="image-container">
+                            <span class="villager-type-badge badge-matoran">Matoran</span>
+                            <img src="images/villagers/kapura.png" alt="Kapura">
+                        </div>
+                        <h3>Kapura</h3>
+                        <span class="villager-village ta-koro">🔥 Ta-Koro</span>
+                        <div class="villager-desc">
+                            <strong>Role:</strong> Ta-Koro Guard<br>
+                            <strong>Personality:</strong> Strange, patient, and mysterious. Kapura has a unique ability to be anywhere he wants to be. He achieved this by training to move extremely slowly, learning that speed is not about moving fast.
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4 character-card" data-name="hafu" data-village="po-koro">
+                    <div class="villager-card">
+                        <div class="image-container">
+                            <span class="villager-type-badge badge-matoran">Matoran</span>
+                            <img src="images/villagers/hafu.png" alt="Hafu">
+                        </div>
+                        <h3>Hafu</h3>
+                        <span class="villager-village po-koro">🪨 Po-Koro</span>
+                        <div class="villager-desc">
+                            <strong>Role:</strong> Master Carver<br>
+                            <strong>Personality:</strong> Prideful, talented, and confident. Hafu is the greatest carver in Po-Koro, though he never misses a chance to say so himself. His statues are renowned across Mata Nui.
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4 character-card" data-name="matoro" data-village="ko-koro">
+                    <div class="villager-card">
+                        <div class="image-container">
+                            <span class="villager-type-badge badge-matoran">Matoran</span>
+                            <img src="images/villagers/matoro.png" alt="Matoro">
+                        </div>
+                        <h3>Matoro</h3>
+                        <span class="villager-village ko-koro">❄️ Ko-Koro</span>
+                        <div class="villager-desc">
+                            <strong>Role:</strong> Translator / Chronicler's Aide<br>
+                            <strong>Personality:</strong> Quiet, thoughtful, and reserved. Matoro assists Turaga Nuju by translating his cryptic speeches. He has a destiny far beyond Mata Nui that would unfold in the years to come.
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4 character-card" data-name="hahli" data-village="ga-koro">
+                    <div class="villager-card">
+                        <div class="image-container">
+                            <span class="villager-type-badge badge-matoran">Matoran</span>
+                            <img src="images/villagers/hahli.png" alt="Hahli">
+                        </div>
+                        <h3>Hahli</h3>
+                        <span class="villager-village ga-koro">💧 Ga-Koro</span>
+                        <div class="villager-desc">
+                            <strong>Role:</strong> Kolhii Player<br>
+                            <strong>Personality:</strong> Determined, athletic, and loyal. Hahli is a champion Kolhii player who rose to fame during the Kolhii Tournament. She is Jaller's close friend and a skilled fighter.
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4 character-card" data-name="tamaru" data-village="le-koro">
+                    <div class="villager-card">
+                        <div class="image-container">
+                            <span class="villager-type-badge badge-matoran">Matoran</span>
+                            <img src="images/villagers/tamaru.png" alt="Tamaru">
+                        </div>
+                        <h3>Tamaru</h3>
+                        <span class="villager-village le-koro">🌪️ Le-Koro</span>
+                        <div class="villager-desc">
+                            <strong>Role:</strong> Gukko Force<br>
+                            <strong>Personality:</strong> Shy, kind, and gentle. Despite living in the treetop village of Le-Koro, Tamaru is ironically afraid of heights. He overcomes his fear to serve the Gukko Force and protect his home.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 3: The Turaga (Elders) -->
+            <h3 class="section-title">👑 The Turaga — Wise Elders</h3>
+            <div class="section-subtitle">
+                <p>The Turaga are the wise elders who lead each village. They were once Toa Metru from the city of Metru Nui, but sacrificed their Toa power to awaken the Matoran and lead them to the island of Mata Nui. Each Turaga wears a Noble Kanohi and carries the wisdom of ages.</p>
+            </div>
+            <div class="row" id="turagaContainer">
+                <div class="col-md-6 col-lg-4 character-card" data-name="vakama" data-village="ta-koro">
+                    <div class="villager-card">
+                        <div class="image-container">
+                            <span class="villager-type-badge badge-turaga">Turaga</span>
+                            <img src="images/villagers/vakama.png" alt="Turaga Vakama">
+                        </div>
+                        <h3>Vakama</h3>
+                        <span class="villager-village ta-koro">🔥 Ta-Koro</span>
+                        <div class="villager-desc">
+                            <strong>Kanohi:</strong> Huna (Mask of Invisibility)<br>
+                            <strong>Former Role:</strong> Toa Metru of Fire<br>
+                            <strong>Personality:</strong> Wise, patient, and visionary. Vakama leads Ta-Koro with a steady hand. He carries the weight of his past as a Toa Metru and guides his village through countless dangers.
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4 character-card" data-name="nokama" data-village="ga-koro">
+                    <div class="villager-card">
+                        <div class="image-container">
+                            <span class="villager-type-badge badge-turaga">Turaga</span>
+                            <img src="images/villagers/nokama.png" alt="Turaga Nokama">
+                        </div>
+                        <h3>Nokama</h3>
+                        <span class="villager-village ga-koro">💧 Ga-Koro</span>
+                        <div class="villager-desc">
+                            <strong>Kanohi:</strong> Rau (Mask of Translation)<br>
+                            <strong>Former Role:</strong> Toa Metru of Water<br>
+                            <strong>Personality:</strong> Gentle, wise, and diplomatic. Nokama is the heart of Ga-Koro, known for her patience and ability to resolve conflicts. She can translate any language.
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4 character-card" data-name="nuju" data-village="ko-koro">
+                    <div class="villager-card">
+                        <div class="image-container">
+                            <span class="villager-type-badge badge-turaga">Turaga</span>
+                            <img src="images/villagers/nuju.png" alt="Turaga Nuju">
+                        </div>
+                        <h3>Nuju</h3>
+                        <span class="villager-village ko-koro">❄️ Ko-Koro</span>
+                        <div class="villager-desc">
+                            <strong>Kanohi:</strong> Matatu (Mask of Telekinesis)<br>
+                            <strong>Former Role:</strong> Toa Metru of Ice<br>
+                            <strong>Personality:</strong> Mysterious, distant, and contemplative. Nuju rarely speaks directly, preferring to communicate through his translator, Matoro. He spends hours studying the stars.
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4 character-card" data-name="whenua" data-village="onu-koro">
+                    <div class="villager-card">
+                        <div class="image-container">
+                            <span class="villager-type-badge badge-turaga">Turaga</span>
+                            <img src="images/villagers/whenua.png" alt="Turaga Whenua">
+                        </div>
+                        <h3>Whenua</h3>
+                        <span class="villager-village onu-koro">⛰️ Onu-Koro</span>
+                        <div class="villager-desc">
+                            <strong>Kanohi:</strong> Ruru (Mask of Night Vision)<br>
+                            <strong>Former Role:</strong> Toa Metru of Earth<br>
+                            <strong>Personality:</strong> Practical, knowledgeable, and grounded. Whenua is a historian at heart, always seeking to uncover the lost secrets of the Matoran past.
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4 character-card" data-name="onewa" data-village="po-koro">
+                    <div class="villager-card">
+                        <div class="image-container">
+                            <span class="villager-type-badge badge-turaga">Turaga</span>
+                            <img src="images/villagers/onewa.png" alt="Turaga Onewa">
+                        </div>
+                        <h3>Onewa</h3>
+                        <span class="villager-village po-koro">🪨 Po-Koro</span>
+                        <div class="villager-desc">
+                            <strong>Kanohi:</strong> Komau (Mask of Mind Control)<br>
+                            <strong>Former Role:</strong> Toa Metru of Stone<br>
+                            <strong>Personality:</strong> Grumpy, blunt, but deeply caring. Onewa may complain constantly, but he loves his village and will fight to protect every single Po-Matoran.
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4 character-card" data-name="matau" data-village="le-koro">
+                    <div class="villager-card">
+                        <div class="image-container">
+                            <span class="villager-type-badge badge-turaga">Turaga</span>
+                            <img src="images/villagers/matau.png" alt="Turaga Matau">
+                        </div>
+                        <h3>Matau</h3>
+                        <span class="villager-village le-koro">🌪️ Le-Koro</span>
+                        <div class="villager-desc">
+                            <strong>Kanohi:</strong> Mahiki (Mask of Illusion)<br>
+                            <strong>Former Role:</strong> Toa Metru of Air<br>
+                            <strong>Personality:</strong> Energetic, dramatic, and proud. Matau speaks in grand gestures and colorful language. He leads Le-Koro with flair and encourages music and joy among his villagers.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <footer>
+            <p id="footerYear">Copyright 2026: Jensen Ramnarine | Bionicle Vault - G1 Matoran & Turaga (2001-2003)</p>
+        </footer>
+    </div>
+
+    <script>
+        // ============================================
+        // JAVASCRIPT: Search and Filter Functionality
+        // ============================================
+        
+        // Get DOM elements
+        const searchInput = document.getElementById('searchInput');
+        const villageSelect = document.getElementById('villageSelect');
+        const resetBtn = document.getElementById('resetBtn');
+        const resultDisplay = document.getElementById('resultDisplay');
+        const allCards = document.querySelectorAll('.character-card');
+        const villageCards = document.querySelectorAll('.village-card');
+        
+        // Function to filter cards
+        function filterCharacters() {
+            const searchTerm = searchInput.value.toLowerCase().trim();
+            const selectedVillage = villageSelect.value;
+            
+            let visibleCount = 0;
+            
+            allCards.forEach(card => {
+                const name = card.getAttribute('data-name') || '';
+                const village = card.getAttribute('data-village') || '';
+                
+                const matchesSearch = searchTerm === '' || name.includes(searchTerm);
+                const matchesVillage = selectedVillage === 'all' || village === selectedVillage;
+                
+                if (matchesSearch && matchesVillage) {
+                    card.style.display = '';
+                    visibleCount++;
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+            
+            // Update result count
+            resultDisplay.textContent = `Showing ${visibleCount} of ${allCards.length} characters`;
+            
+            // Console log for debugging
+            console.log(`Filter: Search="${searchTerm}", Village="${selectedVillage}", Results=${visibleCount}/${allCards.length}`);
+        }
+        
+        // Reset all filters
+        function resetFilters() {
+            searchInput.value = '';
+            villageSelect.value = 'all';
+            filterCharacters();
+            console.log('Filters reset');
+        }
+        
+        // Village card click handler
+        villageCards.forEach(card => {
+            card.addEventListener('click', () => {
+                const village = card.getAttribute('data-village');
+                if (village) {
+                    villageSelect.value = village;
+                    filterCharacters();
+                    console.log(`Village clicked: ${village}`);
+                }
+            });
+        });
+        
+        // Event listeners
+        searchInput.addEventListener('input', filterCharacters);
+        villageSelect.addEventListener('change', filterCharacters);
+        resetBtn.addEventListener('click', resetFilters);
+        
+        // Dynamic footer year
+        const footerPara = document.getElementById('footerYear');
+        if (footerPara) {
+            const currentYear = new Date().getFullYear();
+            footerPara.innerHTML = footerPara.innerHTML.replace('2026', currentYear);
+        }
+        
+        // Initial filter to show all
+        filterCharacters();
+        
+        // Console welcome message
+        console.log(`🔷 VILLAGERS PAGE LOADED 🔷`);
+        console.log(`📊 Total characters: ${allCards.length} (${document.querySelectorAll('.badge-matoran').length} Matoran, ${document.querySelectorAll('.badge-turaga').length} Turaga)`);
+        console.log(`🏘️ ${villageCards.length} villages available for filtering`);
+    </script>
+</body>
+</html>

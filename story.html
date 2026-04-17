@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bionicle Vault | Complete Bionicle Lore</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+    <style>
+        body {
+            background: url('images/backgrounds/homesplash.png') no-repeat center center fixed;
+            background-size: cover;
+            color: #eee;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            position: relative;
+        }
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: -1;
+        }
+        header h1 {
+            color: #e94560;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            margin: 20px 0;
+        }
+        .navbar {
+            border-radius: 8px;
+            margin-bottom: 30px;
+            background-color: rgba(15, 15, 26, 0.9) !important;
+            backdrop-filter: blur(5px);
+        }
+        .navbar-brand, .nav-link {
+            color: #eee !important;
+        }
+        .nav-link:hover {
+            color: #e94560 !important;
+        }
+        .page-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        .page-header h2 {
+            color: #e94560;
+            font-size: 2.2rem;
+        }
+        .page-header p {
+            color: #ccc;
+            max-width: 900px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+        .section-title {
+            color: #e94560;
+            border-left: 4px solid #e94560;
+            padding-left: 1rem;
+            margin: 2rem 0 1rem 0;
+        }
+        .section-subtitle {
+            color: #ccc;
+            margin-bottom: 1.5rem;
+            font-style: italic;
+        }
+        .lore-card {
+            background: rgba(22, 33, 62, 0.9);
+            backdrop-filter: blur(4px);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            transition: transform 0.3s, box-shadow 0.3s;
+            height: 100%;
+        }
+        .lore-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(233,69,96,0.3);
+            background: rgba(22, 33, 62, 0.95);
+        }
+        .lore-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+        .lore-card h3 {
+            color: #e94560;
+            margin-bottom: 0.75rem;
+            font-size: 1.3rem;
+        }
+        .lore-card p {
+            color: #ddd;
+            line-height: 1.5;
+        }
+        .timeline-item {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background: rgba(15, 15, 26, 0.5);
+            border-radius: 8px;
+            border-left: 3px solid #e94560;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .timeline-item:hover {
+            background: rgba(233, 69, 96, 0.2);
+        }
+        .timeline-year {
+            min-width: 100px;
+            font-weight: bold;
+            color: #e94560;
+        }
+        .timeline-desc {
+            color: #ddd;
+        }
+        .two-column {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        .three-column {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        .mnog-section, .metru-section {
+            background: rgba(15, 15, 26, 0.6);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border: 1px solid #e94560;
+        }
+        footer {
+            margin-top: 3rem;
+            padding: 1rem 0;
+            text-align: center;
+            border-top: 1px solid #16213e;
+            color: #888;
+            background: rgba(15, 15, 26, 0.7);
+            border-radius: 8px;
+        }
+        .container {
+            position: relative;
+            z-index: 1;
+        }
+        .quote-box {
+            background: rgba(15, 15, 26, 0.85);
+            border-left: 4px solid #e94560;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 8px;
+        }
+        .quote-box p {
+            font-style: italic;
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+        .chapter-nav {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.5rem;
+            margin: 2rem 0;
+        }
+        .chapter-btn {
+            background: rgba(22, 33, 62, 0.9);
+            color: #eee;
+            border: 1px solid #e94560;
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .chapter-btn:hover {
+            background: #e94560;
+            color: white;
+        }
+        .read-more-btn {
+            background: #e94560;
+            color: white;
+            border: none;
+            padding: 0.3rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            margin-top: 0.5rem;
+        }
+        .read-more-btn:hover {
+            background: #ff6b6b;
+        }
+        .extra-content {
+            display: none;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255,255,255,0.2);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🪨 Bionicle Vault 🧊</h1>
+        </header>
+        <main>
+            <!-- Navigation Bar -->
+            <nav class="navbar navbar-expand-lg bg-body-tertiary">
+                <div class="container-fluid">
+                    <a class="navbar-brand" href="index.html">Bionicle Vault</a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                        <ul class="navbar-nav">
+                            <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                            <li class="nav-item"><a class="nav-link" href="backstory.html">Origins</a></li>
+                            <li class="nav-item"><a class="nav-link active" href="story.html">Actual Bionicle Lore</a></li>
+                            <li class="nav-item"><a class="nav-link" href="villagers.html">Matoran</a></li>
+                            <li class="nav-item"><a class="nav-link" href="heroes.html">Toa</a></li>
+                            <li class="nav-item"><a class="nav-link" href="villains.html">Makuta</a></li>
+                            <li class="nav-item"><a class="nav-link" href="masks.html">Kanohi</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+
+            <!-- Page Header -->
+            <div class="page-header">
+                <h2>🌍 The Complete Legend of Bionicle 🌍</h2>
+                <p>The full story — from the Great Spirit's slumber to the awakening of the Toa, the betrayal of Makuta, the cleansing of the Bohrok, and the birth of the seventh hero. This is the complete lore of Generation 1 (2001-2003).</p>
+            </div>
+
+            <!-- Chapter Navigation (JavaScript Interactive) -->
+            <div class="chapter-nav" id="chapterNav"></div>
+
+            <!-- ============================================ -->
+            <!-- PART 1: THE BEGINNING - METRU NUI            -->
+            <!-- ============================================ -->
+            <h3 class="section-title" id="chapter1">🏙️ Part 1: Metru Nui — The City of Legends</h3>
+            <div class="section-subtitle">
+                <p>Before the island of Mata Nui, before the Toa Mata, there was Metru Nui — a magnificent city inside the Great Spirit's head. This is where the story truly begins.</p>
+            </div>
+
+            <div class="two-column">
+                <div class="lore-card">
+                    <div class="lore-icon">🏛️</div>
+                    <h3>The City of Metru Nui</h3>
+                    <p>Metru Nui was a vast, domed city located inside the head of the Great Spirit Mata Nui. It was divided into six districts, each corresponding to an element: Ta-Metru (Fire), Ga-Metru (Water), Ko-Metru (Ice), Onu-Metru (Earth), Po-Metru (Stone), and Le-Metru (Air). The Matoran worked in factories, forging Kanoka disks and Kanohi masks.</p>
+                    <button class="read-more-btn" data-target="metru1">Read More</button>
+                    <div id="metru1" class="extra-content">
+                        <p>The city was powered by the Great Furnace and connected by a network of chutes and railways. The Matoran lived peacefully for thousands of years under the protection of the Toa Metru — until Makuta's betrayal.</p>
+                    </div>
+                </div>
+                <div class="lore-card">
+                    <div class="lore-icon">👑</div>
+                    <h3>The Toa Metru</h3>
+                    <p>The Toa Metru were six heroes chosen to protect Metru Nui: Vakama (Fire), Nokama (Water), Nuju (Ice), Whenua (Earth), Onewa (Stone), and Matau (Air). They were created from Matoran by Toa power and were the predecessors of the Turaga who would later lead the villages on Mata Nui.</p>
+                    <button class="read-more-btn" data-target="metru2">Read More</button>
+                    <div id="metru2" class="extra-content">
+                        <p>Each Toa Metru wielded unique weapons: Vakama used a disk launcher, Nokama used hydro blades, Nuju used crystal spikes, Whenua used drill claws, Onewa used a barbed staff, and Matau used aero slicers.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="metru-section">
+                <h4 style="color:#e94560;">⚡ The Great Cataclysm</h4>
+                <p>Makuta Teridax, the guardian of Metru Nui, betrayed his duty. He cast a spell of darkness over the Great Spirit, plunging Mata Nui into a deep sleep. The city of Metru Nui was thrown into chaos. The Toa Metru, newly created, had to evacuate all Matoran from the city before it collapsed. They led the Matoran through a dangerous underground labyrinth to the surface — the island of Mata Nui. When they arrived, they sacrificed their Toa power to awaken the Matoran, becoming the Turaga elders. The Matoran had no memory of Metru Nui, and the Toa Metru became legend.</p>
+                <button class="read-more-btn" data-target="cataclysm">Read More</button>
+                <div id="cataclysm" class="extra-content">
+                    <p>The Great Cataclysm also caused earthquakes across the universe. The Matoran of Metru Nui were placed in Matoran spheres for the journey, which erased their memories. The Toa Metru's sacrifice is remembered as one of the greatest acts of heroism in Bionicle history.</p>
+                </div>
+            </div>
+
+            <!-- ============================================ -->
+            <!-- PART 2: THE ISLAND OF MATA NUI               -->
+            <!-- ============================================ -->
+            <h3 class="section-title" id="chapter2">🏝️ Part 2: The Island of Mata Nui</h3>
+            <div class="section-subtitle">
+                <p>For 1,000 years, the Matoran lived on the island of Mata Nui — the face of the sleeping Great Spirit. They built six villages, unaware of the darkness growing beneath their feet.</p>
+            </div>
+
+            <div class="three-column">
+                <div class="lore-card">
+                    <div class="lore-icon">🔥</div>
+                    <h3>Ta-Koro</h3>
+                    <p>Village of Fire, built on a volcanic crater. Led by Turaga Vakama. The Ta-Matoran were brave warriors and skilled guards.</p>
+                </div>
+                <div class="lore-card">
+                    <div class="lore-icon">💧</div>
+                    <h3>Ga-Koro</h3>
+                    <p>Village of Water, built on floating lily pads. Led by Turaga Nokama. The Ga-Matoran were expert sailors and fishers.</p>
+                </div>
+                <div class="lore-card">
+                    <div class="lore-icon">❄️</div>
+                    <h3>Ko-Koro</h3>
+                    <p>Village of Ice, perched on Mount Ihu. Led by Turaga Nuju. The Ko-Matoran were wise and contemplative.</p>
+                </div>
+                <div class="lore-card">
+                    <div class="lore-icon">⛰️</div>
+                    <h3>Onu-Koro</h3>
+                    <p>Village of Earth, hidden in underground caverns. Led by Turaga Whenua. The Onu-Matoran were miners and inventors.</p>
+                </div>
+                <div class="lore-card">
+                    <div class="lore-icon">🪨</div>
+                    <h3>Po-Koro</h3>
+                    <p>Village of Stone, carved into desert canyons. Led by Turaga Onewa. The Po-Matoran were sculptors and builders.</p>
+                </div>
+                <div class="lore-card">
+                    <div class="lore-icon">🌪️</div>
+                    <h3>Le-Koro</h3>
+                    <p>Village of Air, built in jungle treetops. Led by Turaga Matau. The Le-Matoran were musicians and Gukko riders.</p>
+                </div>
+            </div>
+
+            <!-- ============================================ -->
+            <!-- PART 3: THE TOA MATA                         -->
+            <!-- ============================================ -->
+            <h3 class="section-title" id="chapter3">⚔️ Part 3: The Toa Mata — Heroes Arrive</h3>
+            <div class="section-subtitle">
+                <p>For 1,000 years, the Matoran prayed for heroes. Their prayers were answered when six canisters washed ashore.</p>
+            </div>
+
+            <div class="two-column">
+                <div class="lore-card">
+                    <div class="lore-icon">📦</div>
+                    <h3>The Canisters</h3>
+                    <p>Six canisters emerged from the sea, each carrying a Toa Mata. They had no memory of their past — only a mission. Tahu landed on Ta-Wahi beach. Gali arrived at Naho Bay. Kopaka washed up on the shores of Ko-Wahi. Onua emerged in Onu-Wahi. Pohatu landed in Po-Wahi. Lewa crashed into the jungles of Le-Wahi. They met the Turaga, who explained their destiny: find their Great Masks, unite the Matoran, and defeat Makuta.</p>
+                </div>
+                <div class="lore-card">
+                    <div class="lore-icon">🎭</div>
+                    <h3>The Quest for Masks</h3>
+                    <p>Each Toa had to find six Great Kanohi masks hidden in shrines across the island. They journeyed through dangerous territories, fighting infected Rahi — creatures corrupted by Makuta's influence. Takua, the wandering Chronicler, helped document their quest. When all six masks were found, the Toa Mata gained their full power and confronted Makuta in his lair beneath the island.</p>
+                    <button class="read-more-btn" data-target="toaQuest">Read More</button>
+                    <div id="toaQuest" class="extra-content">
+                        <p>The final battle against Makuta took place in Mangaia, his underground lair. The Toa fought shadows and illusions, eventually striking Makuta with all six elements combined. Though they didn't destroy him, they weakened him enough to end his reign of terror — for now.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ============================================ -->
+            <!-- PART 4: THE MATA NUI ONLINE GAME             -->
+            <!-- ============================================ -->
+            <h3 class="section-title" id="chapter4">🕹️ Part 4: The Mata Nui Online Game (MNOG)</h3>
+            <div class="section-subtitle">
+                <p>The Mata Nui Online Game was the definitive way to experience the story. It followed Takua, the Chronicler, as he explored the island and witnessed the Toa's journey.</p>
+            </div>
+
+            <div class="mnog-section">
+                <div class="two-column">
+                    <div class="lore-card" style="margin-bottom:0;">
+                        <div class="lore-icon">📜</div>
+                        <h3>Takua's Journey</h3>
+                        <p>Players controlled Takua as he traveled from village to village, helping Matoran, solving puzzles, and uncovering the secrets of Mata Nui. He found the Toa stones, witnessed the arrival of the Toa Mata, and helped them locate their Great Masks. The game ended with Takua and the Toa entering Makuta's lair, where Takua recited the legend of the Toa while they fought the Manas crabs.</p>
+                    </div>
+                    <div class="lore-card" style="margin-bottom:0;">
+                        <div class="lore-icon">🎵</div>
+                        <h3>The Music of MNOG</h3>
+                        <p>Composed by Justin Luchter, the game's soundtrack became iconic. "Ta-Koro" captured the heat and danger of the Fire Village. "Le-Koro" felt like a jungle celebration. "The Final Battle" was tense and epic. For many fans, the music of MNOG <em>is</em> the sound of Bionicle.</p>
+                        <button class="read-more-btn" data-target="mnogMusic">Read More</button>
+                        <div id="mnogMusic" class="extra-content">
+                            <p>The soundtrack was never officially released, but fans have preserved it online. Many still listen to it while reading Bionicle comics or building sets.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ============================================ -->
+            <!-- PART 5: THE BOHROK SWARM                     -->
+            <!-- ============================================ -->
+            <h3 class="section-title" id="chapter5">🪲 Part 5: The Bohrok — Cleaners of the World</h3>
+            <div class="section-subtitle">
+                <p>After Makuta's defeat, a new threat emerged — not evil, but unstoppable. The Bohrok swarms rose from their underground hives to "cleanse" the island.</p>
+            </div>
+
+            <div class="two-column">
+                <div class="lore-card">
+                    <div class="lore-icon">🥚</div>
+                    <h3>The Hives and Krana</h3>
+                    <p>Beneath Mata Nui, thousands of Bohrok slept in organic hives. Each Bohrok was controlled by a Krana — a living, intelligent slug-like creature that piloted the mechanical shell. The Bohrok's purpose was to wipe the island clean of all life and structures, returning it to a blank slate.</p>
+                </div>
+                <div class="lore-card">
+                    <div class="lore-icon">⚡</div>
+                    <h3>The Toa Nuva Transformation</h3>
+                    <p>The Toa Mata were no match for the Bohrok swarms. They immersed themselves in Energized Protodermis — a mysterious, living substance that transforms whatever it touches. They emerged as the Toa Nuva, with enhanced powers, Nuva Masks, and new weapons. Only then could they defeat the Bahrag queens — Cahdok and Gahdok — and seal them in a cage of protodermis, ending the swarm.</p>
+                </div>
+            </div>
+
+            <!-- ============================================ -->
+            <!-- PART 6: THE BOHROK-KAL                       -->
+            <!-- ============================================ -->
+            <h3 class="section-title" id="chapter6">⚙️ Part 6: The Bohrok-Kal — Enhanced Warriors</h3>
+            <div class="section-subtitle">
+                <p>After the Bahrag were sealed, six silver-armored Bohrok-Kal emerged. They were smarter, stronger, and more dangerous than their predecessors.</p>
+            </div>
+
+            <div class="two-column">
+                <div class="lore-card">
+                    <div class="lore-icon">🔘</div>
+                    <h3>The Nuva Symbols</h3>
+                    <p>The Bohrok-Kal were sent to retrieve the Nuva Symbols — eight medallions linked to the Toa Nuva's power. Each Kal had a unique elemental shadow power: Fire Shadow, Water Shadow, Ice Shadow, Stone Shadow, Earth Shadow, and Air Shadow. They could think and strategize, unlike regular Bohrok.</p>
+                </div>
+                <div class="lore-card">
+                    <div class="lore-icon">💥</div>
+                    <h3>The Defeat of the Kal</h3>
+                    <p>The Toa Nuva fought the Bohrok-Kal across the island. In the final battle, the Kal overloaded their powers trying to break the cage of the Bahrag. They were destroyed, and the Nuva Symbols were returned. The Bohrok threat was finally over.</p>
+                </div>
+            </div>
+
+            <!-- ============================================ -->
+            <!-- PART 7: THE MASK OF LIGHT                    -->
+            <!-- ============================================ -->
+            <h3 class="section-title" id="chapter7">✨ Part 7: The Mask of Light — The Seventh Toa</h3>
+            <div class="section-subtitle">
+                <p>In 2003, a new legend began — the search for the Mask of Light and the Toa who would wear it.</p>
+            </div>
+
+            <div class="two-column">
+                <div class="lore-card">
+                    <div class="lore-icon">💡</div>
+                    <h3>The Avohkii</h3>
+                    <p>The Mask of Light, known as the Avohkii, was discovered by Takua and Jaller in the ruins of a shrine. A mysterious voice told them to carry the mask to the seven temples and find the seventh Toa — the Toa of Light. They journeyed across Mata Nui, pursued by Rahkshi — terrifying creatures spawned from Makuta's Kraata.</p>
+                </div>
+                <div class="lore-card">
+                    <div class="lore-icon">⚔️</div>
+                    <h3>The Birth of Takanuva</h3>
+                    <p>After Jaller was struck down protecting him, Takua placed the Mask of Light on his own face. He was transformed into Takanuva — the Toa of Light, riding a Ussal crab named Pewku. He entered Makuta's lair, defeated Teridax in a final battle, and brought light back to Mata Nui. Jaller was revived, and the Great Spirit began to stir.</p>
+                </div>
+            </div>
+
+            <!-- ============================================ -->
+            <!-- PART 8: THE FINAL BATTLE                     -->
+            <!-- ============================================ -->
+            <h3 class="section-title" id="chapter8">🌅 Part 8: The Final Battle and Awakening</h3>
+            <div class="section-subtitle">
+                <p>The legend of Mata Nui reached its climax as the Toa Nuva and Takanuva prepared for the end.</p>
+            </div>
+
+            <div class="two-column">
+                <div class="lore-card">
+                    <div class="lore-icon">🌌</div>
+                    <h3>The Great Spirit Awakens</h3>
+                    <p>With Makuta defeated, the Great Spirit Mata Nui began to rise from his slumber. The island of Mata Nui crumbled and broke apart, revealing the giant robot beneath. The Matoran, Toa, and Turaga escaped to a new homeland, leaving the old island behind.</p>
+                </div>
+                <div class="lore-card">
+                    <div class="lore-icon">📖</div>
+                    <h3>The Legacy</h3>
+                    <p>The Toa Nuva and Takanuva continued to protect the Matoran in their new home. Makuta was not truly gone — his spirit lived on, waiting for another chance. But for now, Mata Nui was at peace. The legend of Bionicle would continue for years to come, but the story of the Toa Mata — the heroes who washed ashore on a mysterious island — remains the heart of it all.</p>
+                </div>
+            </div>
+
+            <!-- ============================================ -->
+            <!-- COMPLETE TIMELINE                            -->
+            <!-- ============================================ -->
+            <h3 class="section-title">📅 Complete Timeline (Pre-G1 to 2003)</h3>
+            <div class="section-subtitle">
+                <p>A full chronological history of the Bionicle universe, from the creation of Metru Nui to the awakening of the Great Spirit. Click any event to learn more.</p>
+            </div>
+
+            <div class="timeline-item" data-info="The Great Beings created the Great Spirit Mata Nui and the Matoran universe inside his body.">
+                <div class="timeline-year">Ancient Times</div>
+                <div class="timeline-desc">The Great Beings create the Great Spirit Mata Nui and the Matoran universe inside his body. The city of Metru Nui is built inside his head.</div>
+            </div>
+            <div class="timeline-item" data-info="The Toa Metru protected Metru Nui under Makuta's guidance — while he secretly plotted betrayal.">
+                <div class="timeline-year">Unknown Past</div>
+                <div class="timeline-desc">The Toa Metru are created. They protect Metru Nui under the guidance of Makuta Teridax — who secretly plots betrayal.</div>
+            </div>
+            <div class="timeline-item" data-info="Makuta cast a spell of darkness over Mata Nui, causing the Great Cataclysm.">
+                <div class="timeline-year">The Great Cataclysm</div>
+                <div class="timeline-desc">Makuta Teridax casts a spell of darkness over the Great Spirit, plunging Mata Nui into a deep sleep. The city of Metru Nui falls into chaos.</div>
+            </div>
+            <div class="timeline-item" data-info="The Toa Metru became Turaga after sacrificing their power to awaken the Matoran.">
+                <div class="timeline-year">The Exile</div>
+                <div class="timeline-desc">The Toa Metru evacuate the Matoran from Metru Nui to the island of Mata Nui. They sacrifice their Toa power to awaken the Matoran, becoming Turaga.</div>
+            </div>
+            <div class="timeline-item" data-info="Makuta infected Rahi with his influence, terrorizing the Matoran villages.">
+                <div class="timeline-year">1,000 Years of Darkness</div>
+                <div class="timeline-desc">Makuta's shadow spreads across Mata Nui. He infects Rahi with his influence, attacking the Matoran villages. The Turaga wait for the prophesied heroes.</div>
+            </div>
+            <div class="timeline-item" data-info="The Toa Mata arrived on Mata Nui in canisters and began their quest.">
+                <div class="timeline-year">2001</div>
+                <div class="timeline-desc">The Toa Mata arrive on Mata Nui. They find their Great Masks, defeat infected Rahi, and confront Makuta. Takua records their journey in MNOG.</div>
+            </div>
+            <div class="timeline-item" data-info="The Bohrok emerged to cleanse the island. The Toa Mata became Toa Nuva.">
+                <div class="timeline-year">2002</div>
+                <div class="timeline-desc">The Bohrok swarms emerge. The Toa Mata transform into Toa Nuva. They defeat the Bahrag queens and stop the cleansing.</div>
+            </div>
+            <div class="timeline-item" data-info="Takua became Takanuva, the Toa of Light, and defeated Makuta.">
+                <div class="timeline-year">2003</div>
+                <div class="timeline-desc">The Mask of Light is found. Takua becomes Takanuva, the Toa of Light. He defeats Makuta Teridax. The Great Spirit begins to awaken.</div>
+            </div>
+            <div class="timeline-item" data-info="The island of Mata Nui crumbled as the Great Spirit rose.">
+                <div class="timeline-year">The Awakening</div>
+                <div class="timeline-desc">The Great Spirit Mata Nui rises. The island of Mata Nui crumbles, revealing the giant robot beneath. The Matoran escape to a new homeland.</div>
+            </div>
+
+            <!-- Closing Quote -->
+            <div class="quote-box">
+                <p>"Unity, Duty, Destiny. These are the words that bind us. They remind us that we are stronger together, that we must protect those who cannot protect themselves, and that every one of us has a purpose. The legend of Bionicle is not just a story — it is a promise. A promise that light will always find a way, even in the darkest of times."</p>
+                <div class="quote-author">— The Code of the Toa</div>
+            </div>
+
+        </main>
+        <footer>
+            <p id="footerYear">Copyright 2026: Jensen Ramnarine | Bionicle Vault - The Complete Legend of Bionicle (Pre-G1 to 2003)</p>
+        </footer>
+    </div>
+
+    <script>
+        // ============================================
+        // JAVASCRIPT: Chapter Navigation, Read More, Timeline Clicks
+        // ============================================
+        
+        // 1. Chapter Navigation Buttons
+        const chapters = [
+            { id: "chapter1", name: "🏙️ Metru Nui" },
+            { id: "chapter2", name: "🏝️ Mata Nui" },
+            { id: "chapter3", name: "⚔️ Toa Mata" },
+            { id: "chapter4", name: "🕹️ MNOG" },
+            { id: "chapter5", name: "🪲 Bohrok" },
+            { id: "chapter6", name: "⚙️ Bohrok-Kal" },
+            { id: "chapter7", name: "✨ Mask of Light" },
+            { id: "chapter8", name: "🌅 Final Battle" }
+        ];
+
+        const chapterNav = document.getElementById('chapterNav');
+        if (chapterNav) {
+            chapters.forEach(chapter => {
+                const btn = document.createElement('button');
+                btn.className = 'chapter-btn';
+                btn.textContent = chapter.name;
+                btn.addEventListener('click', () => {
+                    const section = document.getElementById(chapter.id);
+                    if (section) {
+                        section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        console.log(`📖 Navigated to chapter: ${chapter.name}`);
+                    }
+                });
+                chapterNav.appendChild(btn);
+            });
+            console.log("✅ Chapter navigation created with 8 buttons");
+        }
+
+        // 2. Read More / Read Less functionality
+        const readMoreBtns = document.querySelectorAll('.read-more-btn');
+        readMoreBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                const targetId = this.getAttribute('data-target');
+                const extraContent = document.getElementById(targetId);
+                if (extraContent) {
+                    if (extraContent.style.display === 'none' || extraContent.style.display === '') {
+                        extraContent.style.display = 'block';
+                        this.textContent = 'Read Less';
+                        console.log(`📖 Expanded content: ${targetId}`);
+                    } else {
+                        extraContent.style.display = 'none';
+                        this.textContent = 'Read More';
+                        console.log(`📖 Collapsed content: ${targetId}`);
+                    }
+                }
+            });
+        });
+        console.log(`✅ ${readMoreBtns.length} Read More buttons initialized`);
+
+        // 3. Timeline item click to show alert with more info
+        const timelineItems = document.querySelectorAll('.timeline-item');
+        timelineItems.forEach(item => {
+            item.addEventListener('click', function() {
+                const info = this.getAttribute('data-info');
+                if (info) {
+                    alert(`📜 ${info}`);
+                    console.log(`🕰️ Timeline clicked: ${info.substring(0, 50)}...`);
+                }
+            });
+        });
+        console.log(`✅ ${timelineItems.length} timeline items initialized`);
+
+        // 4. Dynamic footer year
+        const footerPara = document.getElementById('footerYear');
+        if (footerPara) {
+            const currentYear = new Date().getFullYear();
+            footerPara.innerHTML = footerPara.innerHTML.replace('2026', currentYear);
+            console.log(`📅 Footer year updated to ${currentYear}`);
+        }
+
+        // 5. Console welcome message
+        console.log("🔷 COMPLETE BIONICLE LORE PAGE LOADED 🔷");
+        console.log("Unity, Duty, Destiny - The legend continues...");
+        console.log(`📚 Total sections: ${chapters.length} | Read More buttons: ${readMoreBtns.length} | Timeline events: ${timelineItems.length}`);
+    </script>
+</body>
+</html>
